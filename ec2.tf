@@ -118,16 +118,17 @@ data "aws_key_pair" "cba_keypair1" {
   #}
 #}
 
-resource "aws_instance" "ec2_spin" {
+resource "aws_instance" "ec2_project" {
   ami           = "ami-0fc5d935ebf8bc3bc"  
   instance_type = "t3.medium"              
   key_name      = "cba_keypair1" 
   subnet_id     = "subnet-0a51813fd0a961709"  # "subnet-0123456789abcdef0"  # Replace with your desired subnet ID
   associate_public_ip_address = true
   security_groups = [data.aws_security_group.existing_sg.id]
-  user_data       = fileexists("user_dataJen.sh") ? file("user_dataJen.sh") : null
+  user_data       = file("user_project.sh")
+  #user_data       = fileexists("user_dataJen.sh") ? file("user_dataJen.sh") : null
   
   tags = {
-    Name = "ec2_spin"
+    Name = "ec2_project"
   }
 }
